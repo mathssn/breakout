@@ -14,15 +14,13 @@ class Player:
         if self.game.state not in [0, 1]:
             return None
         
-        if self.movement[0] and not self.movement[1]:
-            self.rect.x -= self.speed * delta_time
-            if self.rect.x < 0:
-                self.rect.x = 0
-                
-        if self.movement[1] and not self.movement[0]:
-            self.rect.x += self.speed * delta_time
-            if self.rect.right > self.game.screen.get_width():
-                self.rect.right = self.game.screen.get_width()
+        move = -self.movement[0]+self.movement[1]
+        self.rect.x += move * self.speed * delta_time
+
+        if self.rect.x < 0:
+            self.rect.x = 0
+        if self.rect.right > self.game.screen.get_width():
+            self.rect.right = self.game.screen.get_width()
 
     def draw(self, screen: pg.Surface):
         pg.draw.rect(screen, (255, 255, 255), self.rect, border_radius=10)
